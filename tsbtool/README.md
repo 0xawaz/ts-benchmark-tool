@@ -13,10 +13,10 @@ We use .env to manage our environment variables and secrets, please replace with
 
 ```bash
 # Database ENV Variables
-POSTGRES_USER     =xxxxxx
-POSTGRES_PASSWORD =xxxxxx
-POSTGRES_DB_URL   =xxxxxx
-POSTGRES_DB       =xxxxxx
+POSTGRES_USER=xxxxxx
+POSTGRES_PASSWORD=xxxxxx
+POSTGRES_DB_URL=xxxxxx
+POSTGRES_DB=xxxxxx
 ```
 
 ### Setup database and run migration scripts
