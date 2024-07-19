@@ -1,5 +1,6 @@
 # File: files
 # Ignore everything in this directory
-*
+*.csv
+*.sql
 # Except for this file
 !.gitignore
