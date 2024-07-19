@@ -19,6 +19,8 @@ POSTGRES_DB_URL   =xxxxxx
 POSTGRES_DB       =xxxxxx
 ```
 
+### Setup database and run migration scripts
+
 ```bash
 # populate env vars
 source .env
