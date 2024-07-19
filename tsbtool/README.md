@@ -7,6 +7,18 @@ Make sure you have docker and docker-compose [installed](https://docs.docker.com
 ## Run Using docker-compose
 We prefer to use docker-compose to avoid any dependencies incompatibilities, and all the local mess.
 
+### Create .env file
+
+We use .env to manage our environment variables and secrets, please replace with your values.
+
+```bash
+# Database ENV Variables
+POSTGRES_USER     =xxxxxx
+POSTGRES_PASSWORD =xxxxxx
+POSTGRES_DB_URL   =xxxxxx
+POSTGRES_DB       =xxxxxx
+```
+
 ```bash
 # populate env vars
 source .env
