@@ -9,3 +9,15 @@ services:
     image: timescale/timescaledb:2.15.3-pg16
     ports:
       - "5432:5432"
+  migration:
+    image: postgres:alpine3.16
+    depends_on:
+      - db
+    entrypoint: ["/bin/sh", "-c", "sleep 10 && /migrate.sh"]
+    volumes:
+      - ./migrate.sh:/migrate.sh
+      - ./migrations:/migrations
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
