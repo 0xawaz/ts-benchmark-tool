@@ -35,3 +35,7 @@ docker-compose up -d
 # cleanup 
 docker-compose down
 ```
+
+## Set up Query tool
+
+
