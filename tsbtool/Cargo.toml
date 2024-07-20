@@ -1,7 +1,7 @@
 [package]
 name    = "tsbtool"
 version = "0.1.0"
-authors = ["0xawaz amina.devops@gmail.com"]
+authors = ["0xawaz contact@0xawaz.com"]
 edition = "2021"
 
 [lib]
