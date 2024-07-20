@@ -39,3 +39,8 @@ docker-compose down
 ## Set up `tsbtool` Query tool
 
 Coming Soon ...
+
+```bash
+docker build -t 0xawaz/tsbtool:0.1.0 .
+
+```
