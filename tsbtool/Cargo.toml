@@ -1,0 +1,19 @@
+[package]
+name    = "tsbtool"
+version = "0.1.0"
+authors = ["0xawaz amina.devops@gmail.com"]
+edition = "2021"
+
+[lib]
+name = "tsbtool"
+path = "src/lib.rs"
+
+[[bin]]
+name = "tsbtool_bin"
+path = "src/main.rs"
+
+[dependencies]
+structopt = "0.3"
+csv = "1.1"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
