@@ -9,7 +9,7 @@ name = "tsbtool"
 path = "src/lib.rs"
 
 [[bin]]
-name = "tsbtool_bin"
+name = "tsbtool"
 path = "src/main.rs"
 
 [dependencies]
