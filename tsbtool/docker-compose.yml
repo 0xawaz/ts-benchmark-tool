@@ -1,7 +1,7 @@
-version: '3'
-
+name: 0xawaz_tsbtool
 services:
   db:
+    container_name: "db"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_DB: "${POSTGRES_DB}"
@@ -9,7 +9,9 @@ services:
     image: timescale/timescaledb:2.15.3-pg16
     ports:
       - "5432:5432"
+
   migration:
+    container_name: "migration"
     image: postgres:alpine3.16
     depends_on:
       - db
@@ -21,3 +23,16 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+
+  tsbtool:
+      container_name: "tsbtool"
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        - db
+        - migration
+      command: ["--help"]
+      volumes:
+        - ./migrations/query_params.csv:/app/query_params.csv
+      restart: on-failure
