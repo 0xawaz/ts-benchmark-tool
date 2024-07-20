@@ -23,10 +23,20 @@ We will try to build a tool to benchmark SELECT queries performance across multi
 - the average query time
 - the maximum query time
 
-## Implementation
-
 ### Process Flow
 
 According to our understanding of the specification and requirment for the Timescale Benchmark tool. We suggest the following process flow:
 
 ![ts-benchmark-tool Process Flow](ts-benchmark-tool_process-flow.png)
+
+## Implementation
+
+See [tsbtool/README.md](tsbtool/README.md)
+
+## Acknowledgment
+
+This project was supported by [timescale](https://www.timescale.com/). We based our work on resources provided by timescale team:
+
+* [Timescale Documentation](https://docs.timescale.com/getting-started/latest/)
+* [Timescale Core](https://github.com/timescale/timescaledb)
+* [Timescale Docker image](https://github.com/timescale/timescaledb-docker-ha)

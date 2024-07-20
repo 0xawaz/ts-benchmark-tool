@@ -1,4 +1,4 @@
-# tsbtool by 0xawaz for TimescaleDB
+# `tsbtool` by 0xawaz for Timescale
 
 ## Install binaries
 
@@ -36,6 +36,6 @@ docker-compose up -d
 docker-compose down
 ```
 
-## Set up Query tool
+## Set up `tsbtool` Query tool
 
-
+Coming Soon ...
