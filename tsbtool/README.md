@@ -38,9 +38,18 @@ docker-compose down
 
 ## Set up `tsbtool` Query tool
 
-Coming Soon ...
-
 ```bash
-docker build -t 0xawaz/tsbtool:0.1.0 .
+# compile locally and run binary
+cargo update
+cargo build
+./target/debug/tsbtool migrations/query_params.csv --workers 8
 
+# build docker image et run container
+docker build -t 0xawaz/tsbtool:0.1.0 .
+docker run --rm -it 0xawaz/tsbtool:0.1.0 --help
+docker run --rm -it 0xawaz/tsbtool:0.1.0 --help
+
+# docker-compose
+docker-compose up -d
+docker-compose down
 ```
