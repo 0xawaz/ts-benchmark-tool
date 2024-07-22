@@ -38,6 +38,12 @@ docker-compose down
 
 ## Set up `tsbtool` Query tool
 
+#### Workflow
+
+inputs -> read CSV  ->  distribute work  -> output bench-stats
+
+#### Compile and run - WORK IN PROGRESS -
+
 ```bash
 # compile locally and run binary
 cargo update
