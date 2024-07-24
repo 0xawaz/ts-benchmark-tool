@@ -15,5 +15,12 @@ path = "src/main.rs"
 [dependencies]
 structopt = "0.3"
 csv = "1.1"
+chrono = { version = "0.4", features = ["serde", "time"] }
+dotenv = "0.15.0"
+tokio = { version = "1", features = ["full"] } # async runtime
+futures = "0.3"
+tokio-postgres = "0.7" # async PG cnx
+serde = { version = "1.0", features = ["derive"] } # serialization framework
+thiserror = "1.0" # custom error handling
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
