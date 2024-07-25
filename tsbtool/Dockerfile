@@ -1,7 +1,5 @@
 #### Stage 1: Build stage
 FROM --platform=linux/amd64 rust:1.79.0-slim AS build
-
-# check syntax for github handle
 LABEL maintainer=0xawaz
 
 # Install musl target
@@ -10,14 +8,14 @@ RUN rustup target add x86_64-unknown-linux-musl
 # Create app directory
 WORKDIR /app
 
+# Copy Cargo manifest files and build dependencies
+COPY Cargo.toml Cargo.lock ./
+RUN cargo fetch
+
 # Copy source code
 COPY src/ ./src/
 
-# Install app dependencies
-COPY Cargo.toml Cargo.lock ./
-RUN cargo build --target x86_64-unknown-linux-musl --release
-
-# Compile app
+# Build the application
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
 #### Stage 2: Runtime stage
@@ -33,4 +31,4 @@ WORKDIR /app
 COPY --from=build /app/target/x86_64-unknown-linux-musl/release/tsbtool /app
 
 # Define app Entrypoint
-ENTRYPOINT [ "/app/tsbtool" ]
+ENTRYPOINT ["/app/tsbtool"]
