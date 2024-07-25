@@ -2,13 +2,14 @@ name: 0xawaz_tsbtool
 services:
   db:
     container_name: "db"
+    image: timescale/timescaledb:2.15.3-pg16
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    image: timescale/timescaledb:2.15.3-pg16
-    ports:
-      - "5432:5432"
+    restart: on-failure
 
   migration:
     container_name: "migration"
@@ -25,14 +26,20 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
   tsbtool:
-      container_name: "tsbtool"
-      build:
-        context: .
-        dockerfile: Dockerfile
-      depends_on:
-        - db
-        - migration
-      command: ["--help"]
-      volumes:
-        - ./migrations/query_params.csv:/app/query_params.csv
-      restart: on-failure
+    container_name: "tsbtool"
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: 0xawaz/tsbtool:0.1.0
+    depends_on:
+      - db
+      - migration
+    entrypoint: ["/bin/sh", "-c", "sleep 15 && /app/tsbtool /app/query_params.csv --workers 4"]
+    volumes:
+      - ./migrations/query_params.csv:/app/query_params.csv
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB_URL: "${POSTGRES_DB_URL}"
+      TIMESCALE_DB: "${TIMESCALE_DB}"
+      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${TIMESCALE_DB}"
