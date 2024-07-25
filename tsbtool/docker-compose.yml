@@ -30,7 +30,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: 0xawaz/tsbtool:1.0.0
+    image: 0xawaz/tsbtool:0.1.0
     depends_on:
       - db
       - migration
