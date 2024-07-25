@@ -27,10 +27,9 @@ services:
 
   tsbtool:
     container_name: "tsbtool"
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    image: 0xawaz/tsbtool:0.1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - db
       - migration
