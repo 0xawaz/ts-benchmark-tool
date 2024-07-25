@@ -8,27 +8,33 @@ I you need an ansible role for docker, please check [here](https://github.com/0x
 
 ## Quickstart
 
-Please follow these steps to get tbstool up and running and get your benchmark stats.
+Please follow these steps to get tbstool up and running and get your benchmark stats:
 
 ```sh
+# get project
 git clone git@github.com:0xawaz/ts-benchmark-tool.git
-
 cd ts-benchmark-tool/tsbtool
 
-# get setup
+# get data
 wget -O migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz "https://www.dropbox.com/s/17mr38w21yhgjjl/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz?dl=1" \
 && tar -xzvf migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz -C migrations/ \
 && rm migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz
 
-# replace password
+# replace password, you can also change other env vars if you wish
 PASSWORD="your_password_here"
 sed "s/<REPLACE-ME-WITH-YOUR-PASSWOD>/${PASSWORD}/" .env-example > .env
 
+# populate env vars
 source .env
 
+# run program
 docker-compose up -d
 
+# check output
 docker logs tsbtool
+
+# cleanup
+docker-compose down
 ```
 
 Expected output looks like:
@@ -77,7 +83,7 @@ docker-compose down
 #### Workflow
 
 ```sh
-inputs  -> read CSV |->  distribute work  -> outputs
+inputs  -> read csv |->  distribute work  -> outputs
                     |-> process query
                     |-> extract hostname
 ```
@@ -102,8 +108,9 @@ docker run --rm -it 0xawaz/tsbtool:0.1.0 /app/tsbtool /app/query_params.csv --wo
 
 # run using docker-compose
 docker-compose up -d
-docker-compose down
 
+# cleanup
+docker-compose down
 ```
 
 ## To improve
