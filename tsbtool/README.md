@@ -31,7 +31,7 @@ source .env
 docker-compose up -d
 
 # check output
-docker logs tsbtool
+docker logs -f tsbtool
 
 # cleanup
 docker-compose down
@@ -52,7 +52,9 @@ Median query time: 16.913437ms
 Average query time: 18.40887ms
 ```
 
-Please contact [0xawaz](https://t.me/oxawaz) if you get a different output.
+Note that we wait for the database and data migration to be ready, this should take less than 15s depending on other factors like networking ...
+
+Please contact [0xawaz](https://t.me/oxawaz) if you get any unexpected behavior.
 
 ## Dev Deep Dive
 
