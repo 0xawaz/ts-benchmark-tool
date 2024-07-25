@@ -68,7 +68,7 @@ async fn process_query(query: String) -> Duration {
         .query(query.as_str(), &[])
         .await
     {
-        Ok(rows) => {
+        Ok(_rows) => {
             // println!("Query executed successfully, {} rows returned.", rows.len());
         }
         Err(e) => {
@@ -83,9 +83,8 @@ async fn process_query(query: String) -> Duration {
 //
 // ------------------------------ DISTRIBUTE WORK AMONG WORKERS ------------------------------
 //
-pub async fn distribute_work(queries: Vec<String>) {
+pub async fn distribute_work(queries: Vec<String>, num_workers: usize) {
     let mut workers: Vec<Arc<Mutex<Vec<String>>>> = Vec::new();
-    let num_workers = 4;  // Adjust based on your requirements
     for _ in 0..num_workers {
         workers.push(Arc::new(Mutex::new(Vec::new())));
     }

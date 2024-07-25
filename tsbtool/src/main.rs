@@ -24,5 +24,5 @@ async fn main() {
     };
 
     // 2. distribute queries among workers and display bench stats
-    tsbtool::distribute_work(sql_queries).await;
+    tsbtool::distribute_work(sql_queries, args.workers).await;
 }
