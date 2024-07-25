@@ -4,7 +4,7 @@
 
 Make sure you have docker and docker-compose [installed](https://docs.docker.com/engine/install/).
 
-I you need an ansible role for docker, please check [here](https://github.com/0xawaz/awaz-penumbra-testnet/blob/main/infra/roles/docker/tasks/main.yml).
+If you need an ansible role for docker, please check [here](https://github.com/0xawaz/awaz-penumbra-testnet/blob/main/infra/roles/docker/tasks/main.yml).
 
 ## Quickstart
 
