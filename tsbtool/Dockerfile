@@ -1,6 +1,9 @@
 #### Stage 1: Build stage
 FROM --platform=linux/amd64 rust:1.79.0-slim AS build
 
+# check syntax for github handle
+LABEL maintainer=0xawaz
+
 # Install musl target
 RUN rustup target add x86_64-unknown-linux-musl
 
