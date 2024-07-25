@@ -9,7 +9,7 @@ RUN rustup target add x86_64-unknown-linux-musl
 WORKDIR /app
 
 # Copy Cargo manifest files and build dependencies
-COPY Cargo.toml Cargo.lock ./
+COPY Cargo.toml ./
 RUN cargo fetch
 
 # Copy source code
