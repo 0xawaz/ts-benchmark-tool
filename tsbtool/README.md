@@ -4,58 +4,122 @@
 
 Make sure you have docker and docker-compose [installed](https://docs.docker.com/engine/install/).
 
-## Run Using docker-compose
+I you need an ansible role for docker, please check [here](https://github.com/0xawaz/awaz-penumbra-testnet/blob/main/infra/roles/docker/tasks/main.yml).
 
-We prefer to use docker-compose to avoid any dependencies incompatibilities, and all the local mess.
+## Quickstart
 
-### Create .env file
+Please follow these steps to get tbstool up and running and get your benchmark stats.
 
-We use .env to manage our environment variables and secrets, please replace with your values.
+```sh
+git clone git@github.com:0xawaz/ts-benchmark-tool.git
 
-```bash
-# Database ENV Variables
-POSTGRES_USER=xxxxxx
-POSTGRES_PASSWORD=xxxxxx
-POSTGRES_DB_URL=xxxxxx
-POSTGRES_DB=xxxxxx
+cd ts-benchmark-tool/tsbtool
+
+# get setup
+wget -O migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz "https://www.dropbox.com/s/17mr38w21yhgjjl/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz?dl=1" \
+&& tar -xzvf migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz -C migrations/ \
+&& rm migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz
+
+# replace password
+PASSWORD="your_password_here"
+sed "s/<REPLACE-ME-WITH-YOUR-PASSWOD>/${PASSWORD}/" .env-example > .env
+
+source .env
+
+docker-compose up -d
+
+docker logs tsbtool
 ```
 
-### Setup database and Run migration scripts
+Expected output looks like:
 
-```bash
+```sh
+---> Reading CSV file ...
+---> Start distributing queries among workers ...
+---> Calculate benchmark statistics ...
+
+---------------------------- Benchmark Stats ----------------------------
+Number of queries run: 200
+Total processing time: 3.681774081s
+Minimum query time: 10.089875ms
+Median query time: 16.913437ms
+Average query time: 18.40887ms
+```
+
+Please contact [0xawaz](https://t.me/oxawaz) if you get a different output.
+
+## Dev Deep Dive
+
+We are using docker-compose to avoid any dependencies incompatibilities, and because we don't like a local mess ;)
+
+### Set up database and Run migration scripts
+
+```sh
 # populate env vars
 source .env
 
 # run containers - runs timescaledb then migrations scripts
-docker-compose up -d
+docker-compose up -d db
+docker-compose up -d migrations
 
 # verify
-# TODO
+docker ps
+docker exec -it db bash
+  $ psql -U postgres -d homework
+  $ \dt
 
 # cleanup 
 docker-compose down
 ```
 
-## Set up `tsbtool` Query tool
+### Set up `tsbtool` Query Tool
 
 #### Workflow
 
-inputs -> read CSV  ->  distribute work  -> output bench-stats
+```sh
+inputs  -> read CSV |->  distribute work  -> outputs
+                    |-> process query
+                    |-> extract hostname
+```
 
-#### Compile and run - WORK IN PROGRESS -
+#### Compile and run
 
-```bash
+```sh
 # compile locally and run binary
 cargo update
 cargo build
-./target/debug/tsbtool migrations/query_params.csv --workers 8
+./target/debug/tsbtool migrations/query_params.csv --workers 4
 
-# build docker image et run container
+# build docker image
 docker build -t 0xawaz/tsbtool:0.1.0 .
-docker run --rm -it 0xawaz/tsbtool:0.1.0 --help
+
+# run and verify container
+docker run --rm -it 0xawaz/tsbtool:0.1.0 --version
 docker run --rm -it 0xawaz/tsbtool:0.1.0 --help
 
-# docker-compose
+# run tsbtool and get bench-stats
+docker run --rm -it 0xawaz/tsbtool:0.1.0 /app/tsbtool /app/query_params.csv --workers 4
+
+# run using docker-compose
 docker-compose up -d
 docker-compose down
+
 ```
+
+## To improve
+
+* Development
+    * Handle CSV as either STDIN or via a flag with the filename.
+    * Provide additional benchmark statistics.
+    * Use connection pool like deadpool-postgres to manage database connections efficiently.
+    * Add Unit/functional tests. More case to test Error handling.
+
+* Automation (CI/CD)
+    * Use Github Actions to automate image build and publish.
+    * Set stateless config for multiple environments (dev/staging/prod).
+
+* Performence
+    * loadtest `tsbtool` to check limitations.
+
+* Security
+    * Scan all used and created docker images and binaries and patch vulnerabilities if exists.
