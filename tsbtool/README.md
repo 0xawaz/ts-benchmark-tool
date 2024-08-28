@@ -16,9 +16,9 @@ git clone git@github.com:0xawaz/ts-benchmark-tool.git
 cd ts-benchmark-tool/tsbtool
 
 # get data
-wget -O migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz "REPLACE-WITH-YOUR-LINK" \
+wget -O migrations/data-archive.tar.gz "REPLACE-WITH-YOUR-LINK" \
 && tar -xzvf migrations/data-archive.tar.gz -C migrations/ \
-&& rm migrations/TimescaleDB_coding_assignment-RD_eng_setup.tar.gz
+&& rm migrations/data-archive.tar.gz
 
 # replace password, you can also change other env vars if you wish
 PASSWORD="your_password_here"
